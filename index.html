@@ -160,7 +160,8 @@
         <label>
           Evidence mode
           <select id="mode">
-            <option selected>bundled sample evidence</option>
+            <option selected>live public-page snapshot</option>
+            <option>bundled sample evidence</option>
             <option>live Nimble search planned</option>
             <option>internal source packet</option>
           </select>
@@ -231,7 +232,7 @@
   </main>
 
   <script>
-    const sources = [
+    const fallbackSources = [
       {
         id: 'S1',
         title: 'DeveloperWeek NY 2026 Hackathon page',
@@ -258,7 +259,7 @@
       }
     ];
 
-    const baseClaims = [
+    const fallbackClaims = [
       ['DeveloperWeek NY runs May 25 to June 10, 2026.', 'S1', 'high', 'approve'],
       ['Nimble rewards agentic apps that search, browse, extract, or analyze live web data.', 'S2', 'high', 'approve'],
       ['Judging includes progress, concept, and feasibility.', 'S1', 'high', 'approve'],
@@ -281,6 +282,7 @@
     ];
 
     const $ = (id) => document.getElementById(id);
+    let evidenceSnapshot = null;
 
     function escapeHtml(value) {
       return value.replace(/[&<>"']/g, (char) => ({
@@ -292,11 +294,44 @@
       }[char]));
     }
 
+    async function loadSnapshot() {
+      try {
+        const response = await fetch('data/evidence_snapshot.json', { cache: 'no-store' });
+        if (!response.ok) return null;
+        return response.json();
+      } catch {
+        return null;
+      }
+    }
+
+    function snapshotSources(snapshot) {
+      if (!snapshot || !Array.isArray(snapshot.sources)) return fallbackSources;
+      const sourceCards = snapshot.sources.map((source) => ({
+        id: source.id,
+        title: source.title,
+        url: source.url,
+        note: source.snippets?.length
+          ? `Live snapshot markers: ${source.snippets.map((item) => item.marker).join(', ')}. Fetched at ${source.fetched_at}.`
+          : `Fetched at ${source.fetched_at}`
+      }));
+      return sourceCards.concat(fallbackSources.filter((source) => source.id === 'S3' || source.id === 'S4'));
+    }
+
+    function snapshotClaims(snapshot) {
+      if (!snapshot || !Array.isArray(snapshot.claims)) return fallbackClaims;
+      const liveClaims = snapshot.claims.map((claim) => [claim.text, claim.source, claim.confidence, claim.decision]);
+      return liveClaims.concat([
+        ['The product can become a startup workflow for operators.', 'S3 + S4', 'medium', 'approve with caveat'],
+        ['Every source should be refreshed again before final submission.', 'live snapshot policy', 'high', 'approve']
+      ]);
+    }
+
     function buildPacket() {
       const question = $('question').value.trim() || 'No question provided.';
       const mode = $('mode').value;
-      const claims = baseClaims.slice();
-      if (question.toLowerCase().includes('deadline')) {
+      const sources = snapshotSources(evidenceSnapshot);
+      const claims = snapshotClaims(evidenceSnapshot);
+      if (question.toLowerCase().includes('deadline') && !claims.some((claim) => claim[0].startsWith('Deadline tracking'))) {
         claims.push(['Deadline tracking is a strong first use case because it has concrete source changes and clear failure cost.', 'S1 + S3', 'medium', 'approve with caveat']);
       }
       const readiness = Math.round((claims.filter((claim) => claim[3].startsWith('approve')).length / (claims.length + blocked.length)) * 100);
@@ -354,8 +389,10 @@ ${packet.followUps.map((item) => `- ${item}`).join('\n')}`;
       $('copyBtn').textContent = 'Copied';
       setTimeout(() => { $('copyBtn').textContent = 'Copy Approval Answer'; }, 1200);
     });
-    render();
+    loadSnapshot().then((snapshot) => {
+      evidenceSnapshot = snapshot;
+      render();
+    });
   </script>
 </body>
 </html>
-

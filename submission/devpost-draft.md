@@ -23,7 +23,7 @@ The app turns a research question into:
 
 ## How I Built It
 
-The current public prototype is a static HTML/CSS/JavaScript app. It uses bundled sample evidence to demonstrate the core workflow clearly and safely.
+The current public prototype is a static HTML/CSS/JavaScript app. It includes a refresh script that fetches public DeveloperWeek pages and writes a dated evidence snapshot into `data/evidence_snapshot.json`, then the browser app turns that snapshot into source cards and claim rows.
 
 The intended sponsor integration is Nimble. The next version can connect Nimble Search, Extract, Crawl, Map, Web Search Agents, MCP server, or APIs to populate the same evidence table with live web data.
 
@@ -33,7 +33,7 @@ This fits the Nimble challenge because it is an agentic app designed around live
 
 ## Claim Boundary
 
-This static MVP does not claim live Nimble API usage yet. It demonstrates the workflow that live web data should feed.
+This static MVP does not claim live Nimble API usage yet. It demonstrates the workflow that live web data should feed, and it includes a public-page snapshot generator as the bridge toward the sponsor integration.
 
 ## What's Next
 

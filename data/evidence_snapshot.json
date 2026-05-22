@@ -1,0 +1,97 @@
+{
+  "generated_at": "2026-05-22T00:58:48.817Z",
+  "generator": "scripts/refresh_sources.mjs",
+  "claim_boundary": "This snapshot proves live page fetches for public source evidence. It does not prove Nimble API usage.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "DeveloperWeek NY 2026 Hackathon page",
+      "url": "https://dwny-2026-hackathon.devpost.com/",
+      "fetched_at": "2026-05-22T00:58:47.497Z",
+      "snippets": [
+        {
+          "marker": "May 25",
+          "snippet": "nd on-demand recordings Help desk Common questions and support documentation Log in Sign up DeveloperWeek New York 2026 Hackathon May 25 – Jun 10, 2026 Join hackathon Descend Overview My projects Participants (245) Rules Project gallery Updates Discussions Sponsors & Prizes DeveloperWeek New York 2026 Hackathon Join the nati"
+        },
+        {
+          "marker": "June 10",
+          "snippet": "nline this year for the DeveloperWeek New York Hackathon 2026! In Person & Awards - TWA Hotel - June 9-10, 2026 Online - May 25 - June 10, 2026 1. Create a DevPost account and click Register on the DevPost DeveloperWeek New York Hackahton 2026 page. 2. DeveloperWeek New York Hackathon 2026 Hackathon Kicks off May 26, 2026! 3."
+        },
+        {
+          "marker": "Nimble",
+          "snippet": "on building the winning AI project. FAQ for devs: Past Hackathons https://techeurope.io/hackathons/london-hackathon-november-2025 Nimble - Build an Agentic App That Sees the Live Web 1 winner 1st Place: $500 Amazon Gift Card + $500 in Nimble Credits 2nd Place: $250 Amazon Gift Card + $250 in Nimble Credits Contact: hackathon"
+        },
+        {
+          "marker": "Judging Criteria",
+          "snippet": "101OBEX Simon Müller CTO @ eigenmind Seetaram Rayarao JP Morgan Chase Chad Stewart Software Engineer @ Management Control Systems Judging Criteria Progress How much progress did you make? Concept Does it solve a real problem? Feasibility Could this become a startup or company? Questions? Email the hackathon manager Invite others to co"
+        },
+        {
+          "marker": "Progress",
+          "snippet": "n their Challenge(s) and determine a winner(s). The sponsors choose their own prize winners. Round 1 judging will be based on: 1) PROGRESS: How much progress you make on your submission; 2) CONCEPT: Does your submission solve a real problem?; and 3) FEASIBILITY: Could your submission grow/evolve to become a startup or be a pro"
+        },
+        {
+          "marker": "Concept",
+          "snippet": "choose their own prize winners. Round 1 judging will be based on: 1) PROGRESS: How much progress you make on your submission; 2) CONCEPT: Does your submission solve a real problem?; and 3) FEASIBILITY: Could your submission grow/evolve to become a startup or be a profitable business. Hackathon Sponsors Prizes 4 non-cash priz"
+        },
+        {
+          "marker": "Feasibility",
+          "snippet": "ed on: 1) PROGRESS: How much progress you make on your submission; 2) CONCEPT: Does your submission solve a real problem?; and 3) FEASIBILITY: Could your submission grow/evolve to become a startup or be a profitable business. Hackathon Sponsors Prizes 4 non-cash prizes DeveloperWeek New York Hackathon 2026 Overall Winner 1 winner"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "title": "DeveloperWeek New York Hackathon page",
+      "url": "https://www.developerweek.com/newyork/hackathon/",
+      "fetched_at": "2026-05-22T00:58:48.817Z",
+      "snippets": [
+        {
+          "marker": "May 25",
+          "snippet": "ss Pass Code of Conduct Contact Get Involved REGISTER June 9-10, 2026 New York City, NY DEVELOPERWEEK NEW YORK HACKATHON REGISTER May 25 &#8211; June 10, 2026 Online & In-Person DeveloperWeek New York 2026 Hackathon The world’s largest challenge-driven in-person & virtual hackathon, co-located with AI DevSummit New York 2026"
+        },
+        {
+          "marker": "June 10",
+          "snippet": "Conduct Contact Get Involved REGISTER June 9-10, 2026 New York City, NY DEVELOPERWEEK NEW YORK HACKATHON REGISTER May 25 &#8211; June 10, 2026 Online & In-Person DeveloperWeek New York 2026 Hackathon The world’s largest challenge-driven in-person & virtual hackathon, co-located with AI DevSummit New York 2026! Join 300+ deve"
+        },
+        {
+          "marker": "Tower",
+          "snippet": "lace: $500 Amazon Gift Card + $500 in Nimble Credits 2nd Place: &#8211; $250 Amazon Gift Card + $250 in Nimble Credits Learn More Tower Pipeline Challenge: Data-to-AI $1250 in prize value -6 months of free Tower usage: Team Plan with 5 users and 10,000 free compute minutes per month (a $900 value) Each team member from the"
+        },
+        {
+          "marker": "Nimble",
+          "snippet": "oulette $4500 in prize value 1st place: $2,500 cash + $500 domain credits 2nd place: $1,000 cash + $500 domain credits Learn More Nimble &#8211; Build an Agentic App That Sees the Live Web $1,500 in prize value 1st Place: $500 Amazon Gift Card + $500 in Nimble Credits 2nd Place: &#8211; $250 Amazon Gift Card + $250 in Nimble"
+        },
+        {
+          "marker": "Register on Devpost",
+          "snippet": "building new apps, bots and more! Hackathon participants can build any app and compete for $12,500+ in cash, products and prizes. Register on Devpost 2026 Sponsors 2026 Schedule Monday, May 25, 2026 10:00 AM EST | Hackathon Launched Tuesday, May 26, 2026 12:00 PM EST | Hackathon Kickoff Talks & Workshops (Virtual). Learn more about the s"
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "text": "DeveloperWeek New York 2026 Hackathon runs online from May 25 to June 10, 2026.",
+      "source": "S1",
+      "confidence": "high",
+      "decision": "approve"
+    },
+    {
+      "text": "Nimble asks teams to build an AI-powered agentic app that searches, browses, extracts, crawls, maps, or analyzes live web data.",
+      "source": "S1",
+      "confidence": "high",
+      "decision": "approve"
+    },
+    {
+      "text": "Overall judging includes progress, concept, and feasibility.",
+      "source": "S1",
+      "confidence": "high",
+      "decision": "approve"
+    },
+    {
+      "text": "A source-led evidence agent fits the sponsor challenge better than a generic research chatbot.",
+      "source": "S1 + product reasoning",
+      "confidence": "medium",
+      "decision": "approve with wording"
+    }
+  ]
+}

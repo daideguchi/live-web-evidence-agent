@@ -11,7 +11,7 @@ It is built around a simple rule: AI can help search and summarize, but every us
 - Official Devpost: https://dwny-2026-hackathon.devpost.com/
 - Public repo: https://github.com/daideguchi/live-web-evidence-agent
 - Public app: https://daideguchi.github.io/live-web-evidence-agent/
-- Current data mode: bundled sample evidence and browser-side workflow
+- Current data mode: live public-page snapshot plus browser-side workflow
 - Final submission: not submitted
 
 ## Problem
@@ -36,7 +36,7 @@ The app is designed so a live web provider such as Nimble can feed the evidence 
 ## What It Does Not Claim
 
 - It does not claim real Nimble API usage yet.
-- It does not claim live extraction in the public static build.
+- It does not claim Nimble-powered live extraction in the public static build.
 - It does not claim that bundled sample evidence is current.
 - It does not replace human review.
 
@@ -50,6 +50,18 @@ open index.html
 
 ```bash
 npm run verify
+```
+
+Refresh the public source snapshot:
+
+```bash
+npm run refresh:sources
+```
+
+The snapshot is written to:
+
+```text
+data/evidence_snapshot.json
 ```
 
 ## Next

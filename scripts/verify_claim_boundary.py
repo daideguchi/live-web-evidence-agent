@@ -4,7 +4,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 required = [
     "It does not claim real Nimble API usage yet.",
-    "It does not claim live extraction in the public static build.",
+    "It does not claim Nimble-powered live extraction in the public static build.",
     "does not claim live Nimble API usage",
 ]
 
@@ -14,4 +14,3 @@ if missing:
     raise SystemExit("missing claim boundary markers: " + ", ".join(missing))
 
 print("live_web_evidence_agent_claim_boundary_ok")
-
