@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-22T01:56:50.576Z",
+  "generated_at": "2026-05-22T11:07:29.910Z",
   "generator": "scripts/refresh_sources.mjs",
   "claim_boundary": "This snapshot proves live page fetches for public source evidence. It does not prove Nimble API usage.",
   "sources": [
@@ -7,11 +7,11 @@
       "id": "S1",
       "title": "DeveloperWeek NY 2026 Hackathon page",
       "url": "https://dwny-2026-hackathon.devpost.com/",
-      "fetched_at": "2026-05-22T01:56:49.351Z",
+      "fetched_at": "2026-05-22T11:07:28.231Z",
       "snippets": [
         {
           "marker": "May 25",
-          "snippet": "nd on-demand recordings Help desk Common questions and support documentation Log in Sign up DeveloperWeek New York 2026 Hackathon May 25 – Jun 10, 2026 Join hackathon Descend Overview My projects Participants (245) Rules Project gallery Updates Discussions Sponsors & Prizes DeveloperWeek New York 2026 Hackathon Join the nati"
+          "snippet": "nd on-demand recordings Help desk Common questions and support documentation Log in Sign up DeveloperWeek New York 2026 Hackathon May 25 – Jun 10, 2026 Join hackathon Descend Overview My projects Participants (247) Rules Project gallery Updates Discussions Sponsors & Prizes DeveloperWeek New York 2026 Hackathon Join the nati"
         },
         {
           "marker": "June 10",
@@ -43,7 +43,7 @@
       "id": "S2",
       "title": "DeveloperWeek New York Hackathon page",
       "url": "https://www.developerweek.com/newyork/hackathon/",
-      "fetched_at": "2026-05-22T01:56:50.576Z",
+      "fetched_at": "2026-05-22T11:07:29.910Z",
       "snippets": [
         {
           "marker": "May 25",
