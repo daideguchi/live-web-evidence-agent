@@ -67,6 +67,32 @@
       font-weight: 800;
       white-space: nowrap;
     }
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .lang-toggle {
+      display: inline-flex;
+      gap: 4px;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f9fcfd;
+    }
+    .lang-toggle button {
+      width: auto;
+      min-height: 28px;
+      padding: 4px 8px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .lang-toggle button.active { background: var(--brand); color: #fff; }
     main {
       display: grid;
       grid-template-columns: 370px minmax(0, 1fr);
@@ -185,6 +211,7 @@
     }
     @media (max-width: 960px) {
       header { flex-direction: column; }
+      .header-actions { justify-content: flex-start; }
       main, .hero, .flow, .grid-2, .grid-3, .handoff-grid, .handoff-actions { grid-template-columns: 1fr; }
     }
   </style>
@@ -195,7 +222,13 @@
       <h1>Live Web Evidence Agent</h1>
       <p class="tagline">An agentic research workspace that turns live-web findings into source cards, extracted claims, blocked claims, and an approval-ready answer.</p>
     </div>
-    <span class="badge">DeveloperWeek NY · Nimble fit</span>
+    <div class="header-actions">
+      <span class="badge">DeveloperWeek NY · Nimble fit</span>
+      <div class="lang-toggle" aria-label="Language">
+        <button type="button" class="active" data-lang-button="en">EN</button>
+        <button type="button" data-lang-button="ja">日本語</button>
+      </div>
+    </div>
   </header>
 
   <main>
@@ -241,10 +274,10 @@
         <label>
           Evidence mode
           <select id="mode">
-            <option selected>live public-page snapshot</option>
-            <option>bundled sample evidence</option>
-            <option>live Nimble search planned</option>
-            <option>internal source packet</option>
+            <option value="live public-page snapshot" selected>live public-page snapshot</option>
+            <option value="bundled sample evidence">bundled sample evidence</option>
+            <option value="live Nimble search planned">live Nimble search planned</option>
+            <option value="internal source packet">internal source packet</option>
           </select>
         </label>
         <button id="buildBtn">Build Evidence Packet</button>
@@ -334,6 +367,134 @@
   </main>
 
   <script>
+    let currentLang = 'en';
+    const translations = {
+      ja: {
+        'Live Web Evidence Agent': 'ライブWeb証拠エージェント',
+        'An agentic research workspace that turns live-web findings into source cards, extracted claims, blocked claims, and an approval-ready answer.': 'ライブWebの調査結果を、情報源カード、抽出した主張、ブロックすべき主張、承認できる回答に変える調査ワークスペースです。',
+        'DeveloperWeek NY · Nimble fit': 'DeveloperWeek NY · Nimble向け',
+        'source cards': '情報源カード',
+        'extracted claims': '抽出した主張',
+        'blocked claims': 'ブロック主張',
+        'human handoff gate': '人間への引き継ぎ',
+        'One-Sentence Pitch': '一言でいうと',
+        'judge hook': '審査員向けの刺しどころ',
+        'For teams using AI to research the live web, Live Web Evidence Agent turns current pages into a claim ledger so confident answers become reviewable evidence.': 'AIでライブWeb調査をするチームのために、現在のページを主張台帳に変え、自信満々の回答をレビュー可能な証拠に変えます。',
+        'Review Path': 'レビュー手順',
+        'source first': '情報源が先',
+        '1. Pull sources': '1. 情報源を集める',
+        'Start from dated pages and source cards, not a free-floating answer.': '根拠のない回答ではなく、日付付きページと情報源カードから始めます。',
+        '2. Extract claims': '2. 主張を取り出す',
+        'Turn page evidence into a ledger with confidence and source IDs.': 'ページ上の証拠を、信頼度と情報源ID付きの台帳に変えます。',
+        '3. Block unsafe lines': '3. 危ない文を止める',
+        'Separate useful claims from claims that should not be repeated yet.': '使える主張と、まだ繰り返してはいけない主張を分けます。',
+        '4. Call the human': '4. 人間を呼ぶ',
+        'Export an approval answer and handoff packet only after the risky lines are visible.': '危険な文を見える化してから、承認用回答と引き継ぎパケットを出します。',
+        'Snapshot status: loading public evidence snapshot.': 'スナップショット状態: 公開証拠を読み込み中。',
+        'Research Brief': '調査ブリーフ',
+        'human approves': '人間が承認',
+        'Research question': '調査質問',
+        'Evidence mode': '証拠モード',
+        'Build Evidence Packet': '証拠パケットを作る',
+        'Copy Approval Answer': '承認用回答をコピー',
+        'Product Boundary': 'プロダクトの境界',
+        'The public static build demonstrates the evidence workflow. It does not claim real Nimble API execution yet.': '公開静的版は証拠ワークフローを示すものです。まだ実Nimble API実行は主張しません。',
+        'Source Cards': '情報源カード',
+        'traceable claims': '追跡できる主張',
+        'Claim Ledger': '主張台帳',
+        'confidence visible': '信頼度を表示',
+        'Claim': '主張',
+        'Source': '情報源',
+        'Confidence': '信頼度',
+        'Decision': '判断',
+        'Blocked Claims': 'ブロックした主張',
+        'do not repeat': '繰り返さない',
+        'Follow-Up Search Plan': '次の検索計画',
+        'next crawl': '次のクロール',
+        'Voice Handoff Gate': '音声引き継ぎゲート',
+        'calls the human': '人間を呼ぶ',
+        'Preview Voice Handoff': '音声引き継ぎを試す',
+        'Copy Handoff Packet': '引き継ぎパケットをコピー',
+        'Resume Packet': '再開パケット',
+        'This public browser demo previews the escalation protocol. In a local agent workflow, the same packet can trigger a system voice call only when human approval is required.': 'この公開ブラウザデモは、確認が必要な時だけ人間へ上げる手順を示します。ローカルのAIエージェント業務では、同じパケットを使って、人間承認が必要な時だけシステム音声呼び出しを起動できます。',
+        'Approval-Ready Answer': '承認できる回答',
+        'export': '出力',
+        'Claim boundary: this static MVP demonstrates the source-led workflow with bundled sample evidence. It does not claim live Nimble API usage, current web extraction, or automatically verified truth.': '主張の境界: この静的MVPは、同梱サンプル証拠を使った情報源主導ワークフローを示します。ライブNimble API利用、現在Web抽出、自動で真実確認済みとは主張しません。',
+        'live public-page snapshot': '公開ページのライブスナップショット',
+        'bundled sample evidence': '同梱サンプル証拠',
+        'live Nimble search planned': 'ライブNimble検索予定',
+        'internal source packet': '内部情報源パケット',
+        'DeveloperWeek NY 2026 Hackathon page': 'DeveloperWeek NY 2026 ハッカソンページ',
+        'DeveloperWeek New York Hackathon page': 'DeveloperWeek New York ハッカソンページ',
+        'Nimble sponsor challenge': 'Nimbleスポンサー課題',
+        'Submission risk pattern': '提出リスクのパターン',
+        'Operator need': '運用者のニーズ',
+        'Shows dates, online/in-person structure, sponsor tracks, and judging criteria.': '日程、オンライン/現地構成、スポンサー枠、審査基準を示します。',
+        'Asks builders to use live web search, browsing, extraction, crawl, map, agents, MCP server, or APIs.': 'ライブWeb検索、ブラウジング、抽出、クロール、マップ、エージェント、MCPサーバー、APIの活用を求めています。',
+        'Hackathon submissions fail when links, proof, screenshots, or claims are stale.': 'リンク、証拠、スクリーンショット、主張が古いと、ハッカソン提出は失敗します。',
+        'Teams need a repeatable way to know what is sourced, what is guessed, and what needs human approval.': 'チームには、何が情報源付きで、何が推測で、何に人間承認が必要かを再現可能に把握する方法が必要です。',
+        'DeveloperWeek NY runs May 25 to June 10, 2026.': 'DeveloperWeek NY は 2026年5月25日から6月10日まで開催されます。',
+        'DeveloperWeek New York 2026 Hackathon runs online from May 25 to June 10, 2026.': 'DeveloperWeek New York 2026 ハッカソンは、2026年5月25日から6月10日までオンラインで開催されます。',
+        'May 25': '5月25日',
+        'June 10': '6月10日',
+        'Judging Criteria': '審査基準',
+        'Progress': '進捗',
+        'Concept': 'コンセプト',
+        'Feasibility': '実現可能性',
+        'Register on Devpost': 'Devpost登録',
+        'Nimble rewards agentic apps that search, browse, extract, or analyze live web data.': 'Nimbleは、ライブWebデータを検索、閲覧、抽出、分析するエージェント型アプリを評価します。',
+        'Nimble asks teams to build an AI-powered agentic app that searches, browses, extracts, crawls, maps, or analyzes live web data.': 'Nimbleは、ライブWebデータを検索、閲覧、抽出、クロール、マップ化、分析するAIエージェントアプリの構築を求めています。',
+        'Judging includes progress, concept, and feasibility.': '審査には、進捗、コンセプト、実現可能性が含まれます。',
+        'Overall judging includes progress, concept, and feasibility.': '全体審査には、進捗、コンセプト、実現可能性が含まれます。',
+        'A deadline-monitoring evidence agent fits the sponsor challenge.': '締切監視の証拠エージェントはスポンサー課題に合っています。',
+        'A source-led evidence agent fits the sponsor challenge better than a generic research chatbot.': '情報源主導の証拠エージェントは、汎用調査チャットボットよりスポンサー課題に合っています。',
+        'The product can become a startup workflow for operators.': 'このプロダクトは運用者向けのスタートアップ業務フローになり得ます。',
+        'Every source should be refreshed before final submission.': '最終提出前にすべての情報源を再確認すべきです。',
+        'Every source should be refreshed again before final submission.': '最終提出前にすべての情報源をもう一度再確認すべきです。',
+        'Deadline tracking is a strong first use case because it has concrete source changes and clear failure cost.': '締切追跡は、情報源の変化が具体的で、失敗時の損失も明確なため、最初の用途として強いです。',
+        'Do not claim this static build has already called Nimble APIs.': 'この静的版がすでにNimble APIを呼び出したとは主張しないでください。',
+        'Do not claim bundled sample evidence is current live web data.': '同梱サンプル証拠を現在のライブWebデータだと主張しないでください。',
+        'Do not claim the answer is true without a source refresh near submission time.': '提出直前の情報源更新なしに、回答が真実だと主張しないでください。',
+        'Run a real Nimble Search query for current hackathon page changes.': '現在のハッカソンページ変更を確認するため、実Nimble Searchを実行します。',
+        'Extract sponsor requirements into a dated evidence snapshot.': 'スポンサー要件を日付付き証拠スナップショットに抽出します。',
+        'Crawl the project README and verify public links still work.': 'プロジェクトREADMEをクロールし、公開リンクがまだ動くか確認します。',
+        'Generate a final approval packet with source timestamps.': '情報源タイムスタンプ付きの最終承認パケットを生成します。',
+        'high': '高',
+        'medium': '中',
+        'approve': '承認',
+        'approve with wording': '文言調整のうえ承認',
+        'approve with caveat': '注意書き付きで承認',
+        'live snapshot policy': 'ライブスナップショット方針',
+        'S1 + product reasoning': 'S1 + プロダクト判断',
+        'S1 + S2': 'S1 + S2',
+        'S1 + S3': 'S1 + S3',
+        'S3 + S4': 'S3 + S4',
+        'internal workflow notes': '内部ワークフローメモ',
+        'internal product notes': '内部プロダクトメモ',
+        'No question provided.': '質問が入力されていません。'
+      }
+    };
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang === 'ja' ? 'ja' : 'en';
+      document.querySelectorAll('[data-lang-button]').forEach((button) => {
+        button.classList.toggle('active', button.dataset.langButton === lang);
+      });
+      const map = translations[lang] || {};
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      for (const node of nodes) {
+        const parent = node.parentElement;
+        if (!parent || ['SCRIPT', 'STYLE', 'TEXTAREA'].includes(parent.tagName)) continue;
+        if (!node.datasetOriginalText) node.datasetOriginalText = node.nodeValue;
+        const original = node.datasetOriginalText.trim();
+        if (!original) continue;
+        node.nodeValue = node.datasetOriginalText.replace(original, map[original] || original);
+      }
+    }
+
     const fallbackSources = [
       {
         id: 'S1',
@@ -385,6 +546,20 @@
 
     const $ = (id) => document.getElementById(id);
     let evidenceSnapshot = null;
+    const sampleQuestion = {
+      en: 'Should a startup use a live web data agent to monitor hackathon deadlines, sponsor requirements, and submission risks?',
+      ja: 'スタートアップは、ハッカソンの締切、スポンサー要件、提出リスクを監視するためにライブWebデータエージェントを使うべきですか？'
+    };
+
+    function tr(value) {
+      return currentLang === 'ja' ? (translations.ja[value] || value) : value;
+    }
+
+    function syncSampleInputs(lang) {
+      const next = sampleQuestion[lang];
+      const other = sampleQuestion[lang === 'ja' ? 'en' : 'ja'];
+      if ($('question').value === other || $('question').value === next) $('question').value = next;
+    }
 
     function escapeHtml(value) {
       return value.replace(/[&<>"']/g, (char) => ({
@@ -413,8 +588,10 @@
         title: source.title,
         url: source.url,
         note: source.snippets?.length
-          ? `Live snapshot markers: ${source.snippets.map((item) => item.marker).join(', ')}. Fetched at ${source.fetched_at}.`
-          : `Fetched at ${source.fetched_at}`
+          ? (currentLang === 'ja'
+              ? `ライブスナップショットの印: ${source.snippets.map((item) => tr(item.marker)).join(', ')}。取得日時: ${source.fetched_at}。`
+              : `Live snapshot markers: ${source.snippets.map((item) => item.marker).join(', ')}. Fetched at ${source.fetched_at}.`)
+          : (currentLang === 'ja' ? `取得日時: ${source.fetched_at}` : `Fetched at ${source.fetched_at}`)
       }));
       return sourceCards.concat(fallbackSources.filter((source) => source.id === 'S3' || source.id === 'S4'));
     }
@@ -429,7 +606,7 @@
     }
 
     function buildPacket() {
-      const question = $('question').value.trim() || 'No question provided.';
+      const question = $('question').value.trim() || (currentLang === 'ja' ? '質問が入力されていません。' : 'No question provided.');
       const mode = $('mode').value;
       const sources = snapshotSources(evidenceSnapshot);
       const claims = snapshotClaims(evidenceSnapshot);
@@ -449,29 +626,47 @@
 
       $('sourceGrid').innerHTML = packet.sources.map((source) => `
         <div class="card">
-          <h3>${escapeHtml(source.id)} · ${escapeHtml(source.title)}</h3>
-          <p class="source-url">${escapeHtml(source.url)}</p>
-          <p>${escapeHtml(source.note)}</p>
+          <h3>${escapeHtml(source.id)} · ${escapeHtml(tr(source.title))}</h3>
+          <p class="source-url">${escapeHtml(tr(source.url))}</p>
+          <p>${escapeHtml(tr(source.note))}</p>
         </div>
       `).join('');
 
       $('claimTable').querySelector('tbody').innerHTML = packet.claims.map((claim) => `
         <tr>
-          <td>${escapeHtml(claim[0])}</td>
-          <td>${escapeHtml(claim[1])}</td>
-          <td>${escapeHtml(claim[2])}</td>
-          <td>${escapeHtml(claim[3])}</td>
+          <td>${escapeHtml(tr(claim[0]))}</td>
+          <td>${escapeHtml(tr(claim[1]))}</td>
+          <td>${escapeHtml(tr(claim[2]))}</td>
+          <td>${escapeHtml(tr(claim[3]))}</td>
         </tr>
       `).join('');
 
-      $('blockedList').innerHTML = packet.blocked.map((item) => `<div class="card"><p>${escapeHtml(item)}</p></div>`).join('');
-      $('followUpList').innerHTML = packet.followUps.map((item) => `<div class="card"><p>${escapeHtml(item)}</p></div>`).join('');
+      $('blockedList').innerHTML = packet.blocked.map((item) => `<div class="card"><p>${escapeHtml(tr(item))}</p></div>`).join('');
+      $('followUpList').innerHTML = packet.followUps.map((item) => `<div class="card"><p>${escapeHtml(tr(item))}</p></div>`).join('');
       $('snapshotStatus').textContent = snapshotStatus(evidenceSnapshot);
       const prompt = handoffPrompt(packet);
       $('handoffPrompt').textContent = prompt;
       $('handoffList').innerHTML = handoffSummary(packet).map((item) => `<li>${escapeHtml(item)}</li>`).join('');
 
-      $('answer').textContent = `# Evidence Answer
+      $('answer').textContent = currentLang === 'ja' ? `# 証拠付き回答
+
+質問: ${packet.question}
+証拠モード: ${tr(packet.mode)}
+
+短い回答:
+はい。最新ページ、スポンサー要件、締切、提出リスクを引用付きで整理する必要があるなら、ライブWeb証拠エージェントは実用的です。強い形は、汎用調査チャットボットではありません。各回答行が、情報源、信頼度、ブロック主張、人間の承認状態に結びつく「主張台帳」です。
+
+承認できる主張:
+${packet.claims.map((claim) => `- ${tr(claim[0])} [${tr(claim[1])} / ${tr(claim[2])}]`).join('\n')}
+
+ブロックした主張:
+${packet.blocked.map((item) => `- ${tr(item)}`).join('\n')}
+
+人間への引き継ぎ:
+- ${prompt}
+
+次の検索計画:
+${packet.followUps.map((item) => `- ${tr(item)}`).join('\n')}` : `# Evidence Answer
 
 Question: ${packet.question}
 Mode: ${packet.mode}
@@ -490,18 +685,25 @@ Human handoff:
 
 Next search plan:
 ${packet.followUps.map((item) => `- ${item}`).join('\n')}`;
+      applyLanguage(currentLang);
     }
 
     function handoffPrompt(packet) {
       if (!packet.blocked.length) {
-        return 'No human voice handoff is needed. All claims are ready for approval review.';
+        return currentLang === 'ja'
+          ? '人間への音声引き継ぎは不要です。すべての主張は承認レビューに進めます。'
+          : 'No human voice handoff is needed. All claims are ready for approval review.';
       }
-      return `I found ${packet.blocked.length} claims that should not be repeated yet. Please review the blocked claims, refresh the sources if needed, and approve the final answer before it is shared.`;
+      return currentLang === 'ja'
+        ? `まだ繰り返してはいけない主張が ${packet.blocked.length} 件あります。ブロックした主張を確認し、必要なら情報源を更新し、共有前に最終回答を承認してください。`
+        : `I found ${packet.blocked.length} claims that should not be repeated yet. Please review the blocked claims, refresh the sources if needed, and approve the final answer before it is shared.`;
     }
 
     function snapshotStatus(snapshot) {
       if (!snapshot || !Array.isArray(snapshot.sources)) {
-        return 'Snapshot status: using bundled sample evidence. Refresh sources before final submission.';
+        return currentLang === 'ja'
+          ? 'スナップショット状態: 同梱サンプル証拠を使用中。最終提出前に情報源を更新してください。'
+          : 'Snapshot status: using bundled sample evidence. Refresh sources before final submission.';
       }
       const fetched = snapshot.sources
         .map((source) => source.fetched_at)
@@ -510,11 +712,19 @@ ${packet.followUps.map((item) => `- ${item}`).join('\n')}`;
         .at(-1);
       const count = snapshot.sources.length;
       const claimCount = Array.isArray(snapshot.claims) ? snapshot.claims.length : 0;
-      return `Snapshot status: ${count} public sources and ${claimCount} live-page claims loaded. Latest fetch: ${fetched || 'unknown'}.`;
+      return currentLang === 'ja'
+        ? `スナップショット状態: 公開情報源 ${count} 件、ライブページ主張 ${claimCount} 件を読み込みました。最新取得: ${fetched || '不明'}。`
+        : `Snapshot status: ${count} public sources and ${claimCount} live-page claims loaded. Latest fetch: ${fetched || 'unknown'}.`;
     }
 
     function handoffSummary(packet) {
-      return [
+      return currentLang === 'ja' ? [
+        `質問: ${packet.question.slice(0, 96)}`,
+        `証拠モード: ${tr(packet.mode)}`,
+        `ブロック主張: ${packet.blocked.length} 件`,
+        `次の行動: ${tr(packet.followUps[0])}`,
+        '再開ルール: 次の人間またはAIは、チャット全文を読み直さず、主張台帳から続けられます。'
+      ] : [
         `Question: ${packet.question.slice(0, 96)}`,
         `Mode: ${packet.mode}`,
         `Blocked claims: ${packet.blocked.length}`,
@@ -529,45 +739,56 @@ ${packet.followUps.map((item) => `- ${item}`).join('\n')}`;
         created_at: new Date().toISOString(),
         prompt: handoffPrompt(packet),
         question: packet.question,
-        mode: packet.mode,
-        blocked_claims: packet.blocked,
-        follow_up_search_plan: packet.followUps,
-        resume_rule: 'Continue from source cards, claim ledger, blocked claims, and approval state.'
+        mode: currentLang === 'ja' ? tr(packet.mode) : packet.mode,
+        blocked_claims: currentLang === 'ja' ? packet.blocked.map(tr) : packet.blocked,
+        follow_up_search_plan: currentLang === 'ja' ? packet.followUps.map(tr) : packet.followUps,
+        resume_rule: currentLang === 'ja'
+          ? '情報源カード、主張台帳、ブロック主張、承認状態から続けてください。'
+          : 'Continue from source cards, claim ledger, blocked claims, and approval state.'
       }, null, 2);
     }
 
+    document.querySelectorAll('[data-lang-button]').forEach((button) => {
+      button.addEventListener('click', () => {
+        syncSampleInputs(button.dataset.langButton);
+        applyLanguage(button.dataset.langButton);
+        render();
+      });
+    });
     $('buildBtn').addEventListener('click', render);
     $('copyBtn').addEventListener('click', async () => {
       await navigator.clipboard.writeText($('answer').textContent);
-      $('copyBtn').textContent = 'Copied';
-      setTimeout(() => { $('copyBtn').textContent = 'Copy Approval Answer'; }, 1200);
+      $('copyBtn').textContent = currentLang === 'ja' ? 'コピーしました' : 'Copied';
+      setTimeout(() => { $('copyBtn').textContent = currentLang === 'ja' ? '承認用回答をコピー' : 'Copy Approval Answer'; }, 1200);
     });
     $('copyHandoffBtn').addEventListener('click', async () => {
       await navigator.clipboard.writeText(handoffPacket(buildPacket()));
-      $('copyHandoffBtn').textContent = 'Copied';
-      setTimeout(() => { $('copyHandoffBtn').textContent = 'Copy Handoff Packet'; }, 1200);
+      $('copyHandoffBtn').textContent = currentLang === 'ja' ? 'コピーしました' : 'Copied';
+      setTimeout(() => { $('copyHandoffBtn').textContent = currentLang === 'ja' ? '引き継ぎパケットをコピー' : 'Copy Handoff Packet'; }, 1200);
     });
     $('speakBtn').addEventListener('click', () => {
       const message = handoffPrompt(buildPacket());
       if (!('speechSynthesis' in window)) {
-        $('speakBtn').textContent = 'Speech unavailable';
-        setTimeout(() => { $('speakBtn').textContent = 'Preview Voice Handoff'; }, 1400);
+        $('speakBtn').textContent = currentLang === 'ja' ? '音声は使えません' : 'Speech unavailable';
+        setTimeout(() => { $('speakBtn').textContent = currentLang === 'ja' ? '音声引き継ぎを試す' : 'Preview Voice Handoff'; }, 1400);
         return;
       }
-      $('speakBtn').textContent = 'Voice preview started';
+      $('speakBtn').textContent = currentLang === 'ja' ? '音声プレビュー開始' : 'Voice preview started';
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(message);
+      utterance.lang = currentLang === 'ja' ? 'ja-JP' : 'en-US';
       utterance.rate = 0.92;
       utterance.pitch = 1;
-      utterance.onend = () => { $('speakBtn').textContent = 'Preview Voice Handoff'; };
-      utterance.onerror = () => { $('speakBtn').textContent = 'Preview Voice Handoff'; };
+      utterance.onend = () => { $('speakBtn').textContent = currentLang === 'ja' ? '音声引き継ぎを試す' : 'Preview Voice Handoff'; };
+      utterance.onerror = () => { $('speakBtn').textContent = currentLang === 'ja' ? '音声引き継ぎを試す' : 'Preview Voice Handoff'; };
       window.speechSynthesis.speak(utterance);
-      setTimeout(() => { $('speakBtn').textContent = 'Preview Voice Handoff'; }, 4000);
+      setTimeout(() => { $('speakBtn').textContent = currentLang === 'ja' ? '音声引き継ぎを試す' : 'Preview Voice Handoff'; }, 4000);
     });
     loadSnapshot().then((snapshot) => {
       evidenceSnapshot = snapshot;
       render();
     });
+    applyLanguage('en');
   </script>
 </body>
 </html>

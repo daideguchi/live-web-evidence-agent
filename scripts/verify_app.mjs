@@ -63,6 +63,22 @@ if (!answer.includes('Human handoff')) {
   throw new Error('missing human handoff section');
 }
 
+await page.getByRole('button', { name: '日本語' }).click();
+const japaneseBody = await page.locator('body').innerText();
+if (!japaneseBody.includes('ライブWeb証拠エージェント') || !japaneseBody.includes('レビュー可能な証拠')) {
+  throw new Error('Japanese UI toggle failed');
+}
+for (const marker of ['承認できる主張', 'ブロックした主張', '人間への引き継ぎ', '次の検索計画', '文言調整のうえ承認']) {
+  if (!japaneseBody.includes(marker)) {
+    throw new Error(`Japanese dynamic UI missing marker: ${marker}`);
+  }
+}
+for (const leaked of ['Approved claims', 'Blocked claims', 'Human handoff', 'approve with wording']) {
+  if (japaneseBody.includes(leaked)) {
+    throw new Error(`Japanese UI leaked English dynamic text: ${leaked}`);
+  }
+}
+
 await page.screenshot({ path: path.join(root, 'media', 'live-web-evidence-agent-full.png'), fullPage: true });
 await browser.close();
 server.close();
