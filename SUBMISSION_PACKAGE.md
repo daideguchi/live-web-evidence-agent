@@ -12,8 +12,8 @@ Source-led answers from live web evidence.
 
 - Live app: https://daideguchi.github.io/live-web-evidence-agent/
 - GitHub repo: https://github.com/daideguchi/live-web-evidence-agent
-- Demo video asset: `media/live-web-evidence-agent-demo-narrated.mp4`
-- Demo video release URL: https://github.com/daideguchi/live-web-evidence-agent/releases/download/v0.1-submission/live-web-evidence-agent-demo-narrated.mp4
+- Demo video: https://youtu.be/5am3U5zT7Kk
+- Backup demo asset: https://github.com/daideguchi/live-web-evidence-agent/releases/download/v0.1-submission/live-web-evidence-agent-demo-narrated.mp4
 - Public evidence snapshot: `data/evidence_snapshot.json`
 
 ## 250-500 Word Project Description
