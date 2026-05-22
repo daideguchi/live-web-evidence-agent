@@ -9,8 +9,8 @@ It is built around a simple rule: AI can help search and summarize, but every us
 - Challenge: DeveloperWeek New York 2026 Hackathon
 - Sponsor fit: Nimble — Build an Agentic App That Sees the Live Web
 - Official Devpost: https://dwny-2026-hackathon.devpost.com/
-- Public repo: pending
-- Public app: pending
+- Public repo: https://github.com/daideguchi/live-web-evidence-agent
+- Public app: https://daideguchi.github.io/live-web-evidence-agent/
 - Current data mode: bundled sample evidence and browser-side workflow
 - Final submission: not submitted
 
@@ -58,4 +58,3 @@ npm run verify
 2. Add backend proxy for live API calls.
 3. Add source snapshots and run history.
 4. Add exportable evidence packets for teams.
-
