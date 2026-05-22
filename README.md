@@ -29,10 +29,11 @@ Live Web Evidence Agent turns a research question into:
 - extracted claims
 - confidence labels
 - blocked claims
+- voice handoff gate for human review
 - follow-up search plan
 - approval-ready answer
 
-The app is designed so a live web provider such as Nimble can feed the evidence table, while the user keeps control of which claims are approved.
+The app is designed so a live web provider such as Nimble can feed the evidence table, while the user keeps control of which claims are approved. When the agent finds a claim that should not be repeated yet, it prepares a human handoff packet and a browser-side voice prompt so the next person can review the risky part instead of rereading the whole session.
 
 ## Demo Video Asset
 
@@ -61,6 +62,7 @@ It includes:
 - It does not claim Nimble-powered live extraction in the public static build.
 - It does not claim automatically verified truth.
 - It does not replace human review.
+- The voice handoff in the public app is a browser-side preview, not an external notification service.
 
 ## Run
 
@@ -92,3 +94,4 @@ data/evidence_snapshot.json
 2. Add backend proxy for live API calls.
 3. Add source snapshots and run history.
 4. Add exportable evidence packets for teams.
+5. Connect the handoff packet to a local or enterprise notification channel when a human approval gate is reached.

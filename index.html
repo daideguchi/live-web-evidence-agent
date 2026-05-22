@@ -52,6 +52,7 @@
       cursor: pointer;
     }
     button.secondary { background: #fff; color: var(--brand); }
+    button.warn { background: var(--warn); border-color: var(--warn); }
     .tagline { max-width: 790px; font-size: 16px; margin-bottom: 0; }
     .badge, .pill {
       display: inline-flex;
@@ -117,6 +118,25 @@
     }
     .answer strong { color: #ffffff; }
     .source-url { color: var(--brand); word-break: break-all; }
+    .handoff {
+      border-color: #efc57d;
+      background: linear-gradient(180deg, #fffaf0 0%, #ffffff 72%);
+    }
+    .handoff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .handoff-prompt {
+      border: 1px solid #efc57d;
+      background: #fff7e8;
+      border-radius: 8px;
+      padding: 12px;
+      color: #52360f;
+      font-weight: 750;
+      line-height: 1.5;
+    }
+    .handoff-list {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .handoff-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .footer-note {
       grid-column: 1 / -1;
       margin: 0;
@@ -126,7 +146,7 @@
     }
     @media (max-width: 960px) {
       header { flex-direction: column; }
-      main, .hero, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      main, .hero, .grid-2, .grid-3, .handoff-grid, .handoff-actions { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -144,7 +164,7 @@
       <div class="metric"><strong id="sourceMetric">4</strong><span>source cards</span></div>
       <div class="metric"><strong id="claimMetric">6</strong><span>extracted claims</span></div>
       <div class="metric"><strong id="blockedMetric">3</strong><span>blocked claims</span></div>
-      <div class="metric"><strong id="approvalMetric">83%</strong><span>answer readiness</span></div>
+      <div class="metric"><strong id="handoffMetric">1</strong><span>human handoff gate</span></div>
     </section>
 
     <aside class="panel">
@@ -216,6 +236,27 @@
             <span class="pill warn">next crawl</span>
           </div>
           <div id="followUpList" class="stack"></div>
+        </div>
+      </div>
+
+      <div class="panel handoff">
+        <div class="panel-title">
+          <h2>Voice Handoff Gate</h2>
+          <span class="pill warn">calls the human</span>
+        </div>
+        <div class="handoff-grid">
+          <div class="stack">
+            <p class="handoff-prompt" id="handoffPrompt"></p>
+            <div class="handoff-actions">
+              <button class="warn" id="speakBtn">Preview Voice Handoff</button>
+              <button class="secondary" id="copyHandoffBtn">Copy Handoff Packet</button>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Resume Packet</h3>
+            <ul class="handoff-list" id="handoffList"></ul>
+            <p>This public browser demo previews the escalation protocol. In a local agent workflow, the same packet can trigger a system voice call only when human approval is required.</p>
+          </div>
         </div>
       </div>
 
@@ -343,7 +384,7 @@
       $('sourceMetric').textContent = packet.sources.length;
       $('claimMetric').textContent = packet.claims.length;
       $('blockedMetric').textContent = packet.blocked.length;
-      $('approvalMetric').textContent = `${packet.readiness}%`;
+      $('handoffMetric').textContent = packet.blocked.length ? '1' : '0';
 
       $('sourceGrid').innerHTML = packet.sources.map((source) => `
         <div class="card">
@@ -364,6 +405,9 @@
 
       $('blockedList').innerHTML = packet.blocked.map((item) => `<div class="card"><p>${escapeHtml(item)}</p></div>`).join('');
       $('followUpList').innerHTML = packet.followUps.map((item) => `<div class="card"><p>${escapeHtml(item)}</p></div>`).join('');
+      const prompt = handoffPrompt(packet);
+      $('handoffPrompt').textContent = prompt;
+      $('handoffList').innerHTML = handoffSummary(packet).map((item) => `<li>${escapeHtml(item)}</li>`).join('');
 
       $('answer').textContent = `# Evidence Answer
 
@@ -379,8 +423,41 @@ ${packet.claims.map((claim) => `- ${claim[0]} [${claim[1]} / ${claim[2]}]`).join
 Blocked claims:
 ${packet.blocked.map((item) => `- ${item}`).join('\n')}
 
+Human handoff:
+- ${prompt}
+
 Next search plan:
 ${packet.followUps.map((item) => `- ${item}`).join('\n')}`;
+    }
+
+    function handoffPrompt(packet) {
+      if (!packet.blocked.length) {
+        return 'No human voice handoff is needed. All claims are ready for approval review.';
+      }
+      return `I found ${packet.blocked.length} claims that should not be repeated yet. Please review the blocked claims, refresh the sources if needed, and approve the final answer before it is shared.`;
+    }
+
+    function handoffSummary(packet) {
+      return [
+        `Question: ${packet.question.slice(0, 96)}`,
+        `Mode: ${packet.mode}`,
+        `Blocked claims: ${packet.blocked.length}`,
+        `Next action: ${packet.followUps[0]}`,
+        `Resume rule: the next human or agent can continue from the claim ledger without rereading the whole chat.`
+      ];
+    }
+
+    function handoffPacket(packet) {
+      return JSON.stringify({
+        type: 'human_voice_handoff',
+        created_at: new Date().toISOString(),
+        prompt: handoffPrompt(packet),
+        question: packet.question,
+        mode: packet.mode,
+        blocked_claims: packet.blocked,
+        follow_up_search_plan: packet.followUps,
+        resume_rule: 'Continue from source cards, claim ledger, blocked claims, and approval state.'
+      }, null, 2);
     }
 
     $('buildBtn').addEventListener('click', render);
@@ -388,6 +465,24 @@ ${packet.followUps.map((item) => `- ${item}`).join('\n')}`;
       await navigator.clipboard.writeText($('answer').textContent);
       $('copyBtn').textContent = 'Copied';
       setTimeout(() => { $('copyBtn').textContent = 'Copy Approval Answer'; }, 1200);
+    });
+    $('copyHandoffBtn').addEventListener('click', async () => {
+      await navigator.clipboard.writeText(handoffPacket(buildPacket()));
+      $('copyHandoffBtn').textContent = 'Copied';
+      setTimeout(() => { $('copyHandoffBtn').textContent = 'Copy Handoff Packet'; }, 1200);
+    });
+    $('speakBtn').addEventListener('click', () => {
+      const message = handoffPrompt(buildPacket());
+      if (!('speechSynthesis' in window)) {
+        $('speakBtn').textContent = 'Speech unavailable';
+        setTimeout(() => { $('speakBtn').textContent = 'Preview Voice Handoff'; }, 1400);
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(message);
+      utterance.rate = 0.92;
+      utterance.pitch = 1;
+      window.speechSynthesis.speak(utterance);
     });
     loadSnapshot().then((snapshot) => {
       evidenceSnapshot = snapshot;
