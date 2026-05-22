@@ -14,6 +14,7 @@
 - Live app: https://daideguchi.github.io/live-web-evidence-agent/
 - GitHub repo: https://github.com/daideguchi/live-web-evidence-agent
 - Demo video asset: `media/live-web-evidence-agent-demo-narrated.mp4`
+- Demo video release URL: https://github.com/daideguchi/live-web-evidence-agent/releases/download/v0.1-submission/live-web-evidence-agent-demo-narrated.mp4
 - Thumbnail: `media/live-web-evidence-agent-demo-thumb.png`
 - Public source snapshot: `data/evidence_snapshot.json`
 
@@ -35,4 +36,3 @@ Do not claim:
 - Nimble-powered extraction
 - automatically verified truth
 - current evidence unless `npm run refresh:sources` was run near submission time
-

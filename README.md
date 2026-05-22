@@ -11,6 +11,7 @@ It is built around a simple rule: AI can help search and summarize, but every us
 - Official Devpost: https://dwny-2026-hackathon.devpost.com/
 - Public repo: https://github.com/daideguchi/live-web-evidence-agent
 - Public app: https://daideguchi.github.io/live-web-evidence-agent/
+- Release assets: https://github.com/daideguchi/live-web-evidence-agent/releases/tag/v0.1-submission
 - Current data mode: live public-page snapshot plus browser-side workflow
 - Final submission: not submitted
 
@@ -39,6 +40,12 @@ Current narrated review asset:
 
 ```text
 media/live-web-evidence-agent-demo-narrated.mp4
+```
+
+Public release download:
+
+```text
+https://github.com/daideguchi/live-web-evidence-agent/releases/download/v0.1-submission/live-web-evidence-agent-demo-narrated.mp4
 ```
 
 It includes:

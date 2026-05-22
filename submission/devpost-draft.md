@@ -4,6 +4,8 @@ Live app: https://daideguchi.github.io/live-web-evidence-agent/
 
 Source code: https://github.com/daideguchi/live-web-evidence-agent
 
+Demo video: https://github.com/daideguchi/live-web-evidence-agent/releases/download/v0.1-submission/live-web-evidence-agent-demo-narrated.mp4
+
 ## Inspiration
 
 AI can summarize the web quickly, but speed is not enough. Teams need to know which claims came from which source, what confidence level each claim deserves, and which claims should not be repeated until a human approves them.
