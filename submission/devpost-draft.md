@@ -4,7 +4,9 @@ Live app: https://daideguchi.github.io/live-web-evidence-agent/
 
 Source code: https://github.com/daideguchi/live-web-evidence-agent
 
-Demo video: https://github.com/daideguchi/live-web-evidence-agent/releases/download/v0.1-submission/live-web-evidence-agent-demo-narrated.mp4
+Demo video: https://youtu.be/5am3U5zT7Kk
+
+Backup demo asset: https://github.com/daideguchi/live-web-evidence-agent/releases/download/v0.1-submission/live-web-evidence-agent-demo-narrated.mp4
 
 ## Inspiration
 
