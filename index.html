@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live Web Evidence Agent</title>
+  <style>
+    :root {
+      --bg: #f6f8f8;
+      --surface: #ffffff;
+      --ink: #152027;
+      --muted: #5f707b;
+      --line: #d8e2e7;
+      --brand: #1d6f8f;
+      --brand-soft: #e4f3f7;
+      --good: #23774f;
+      --warn: #93631d;
+      --risk: #a33a38;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); }
+    header, main { width: min(1240px, calc(100vw - 40px)); margin: 0 auto; }
+    header {
+      padding: 32px 0 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      align-items: flex-start;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: 34px; margin-bottom: 8px; letter-spacing: 0; }
+    h2 { font-size: 17px; margin-bottom: 10px; }
+    h3 { font-size: 14px; margin-bottom: 6px; }
+    p, li, td, th, label { color: var(--muted); line-height: 1.55; }
+    input, textarea, select, button {
+      font: inherit;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      min-height: 42px;
+      padding: 10px 12px;
+      background: #fff;
+      color: var(--ink);
+    }
+    textarea { min-height: 118px; resize: vertical; }
+    button {
+      border-color: var(--brand);
+      background: var(--brand);
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    button.secondary { background: #fff; color: var(--brand); }
+    .tagline { max-width: 790px; font-size: 16px; margin-bottom: 0; }
+    .badge, .pill {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--brand);
+      border-radius: 999px;
+      min-height: 30px;
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 370px minmax(0, 1fr);
+      gap: 18px;
+      padding-bottom: 40px;
+    }
+    .hero {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .metric, .panel, .card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(20, 37, 48, 0.04);
+    }
+    .metric { padding: 16px; }
+    .metric strong { display: block; font-size: 24px; color: var(--ink); }
+    .metric span { color: var(--muted); font-size: 13px; }
+    .panel { padding: 18px; }
+    .stack { display: grid; gap: 14px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .card { padding: 15px; }
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .pill.good { color: var(--good); background: #e8f5ee; border-color: #b9dfca; }
+    .pill.warn { color: var(--warn); background: #fff2dc; border-color: #f0c987; }
+    .pill.risk { color: var(--risk); background: #fbe9e9; border-color: #eabcbc; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--ink); background: #f9fbfc; }
+    .answer {
+      white-space: pre-wrap;
+      background: #10232e;
+      color: #eff8fb;
+      border-radius: 8px;
+      padding: 14px;
+      overflow: auto;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .answer strong { color: #ffffff; }
+    .source-url { color: var(--brand); word-break: break-all; }
+    .footer-note {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 14px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    @media (max-width: 960px) {
+      header { flex-direction: column; }
+      main, .hero, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Live Web Evidence Agent</h1>
+      <p class="tagline">An agentic research workspace that turns live-web findings into source cards, extracted claims, blocked claims, and an approval-ready answer.</p>
+    </div>
+    <span class="badge">DeveloperWeek NY · Nimble fit</span>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="evidence metrics">
+      <div class="metric"><strong id="sourceMetric">4</strong><span>source cards</span></div>
+      <div class="metric"><strong id="claimMetric">6</strong><span>extracted claims</span></div>
+      <div class="metric"><strong id="blockedMetric">3</strong><span>blocked claims</span></div>
+      <div class="metric"><strong id="approvalMetric">83%</strong><span>answer readiness</span></div>
+    </section>
+
+    <aside class="panel">
+      <div class="panel-title">
+        <h2>Research Brief</h2>
+        <span class="pill warn">human approves</span>
+      </div>
+      <div class="stack">
+        <label>
+          Research question
+          <textarea id="question">Should a startup use a live web data agent to monitor hackathon deadlines, sponsor requirements, and submission risks?</textarea>
+        </label>
+        <label>
+          Evidence mode
+          <select id="mode">
+            <option selected>bundled sample evidence</option>
+            <option>live Nimble search planned</option>
+            <option>internal source packet</option>
+          </select>
+        </label>
+        <button id="buildBtn">Build Evidence Packet</button>
+        <button class="secondary" id="copyBtn">Copy Approval Answer</button>
+        <div class="card">
+          <h3>Product Boundary</h3>
+          <p>The public static build demonstrates the evidence workflow. It does not claim real Nimble API execution yet.</p>
+        </div>
+      </div>
+    </aside>
+
+    <section class="stack">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>Source Cards</h2>
+          <span class="pill good">traceable claims</span>
+        </div>
+        <div class="grid-2" id="sourceGrid"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">
+          <h2>Claim Ledger</h2>
+          <span class="pill">confidence visible</span>
+        </div>
+        <table id="claimTable">
+          <thead>
+            <tr>
+              <th>Claim</th>
+              <th>Source</th>
+              <th>Confidence</th>
+              <th>Decision</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-title">
+            <h2>Blocked Claims</h2>
+            <span class="pill risk">do not repeat</span>
+          </div>
+          <div id="blockedList" class="stack"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">
+            <h2>Follow-Up Search Plan</h2>
+            <span class="pill warn">next crawl</span>
+          </div>
+          <div id="followUpList" class="stack"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">
+          <h2>Approval-Ready Answer</h2>
+          <span class="pill good">export</span>
+        </div>
+        <pre class="answer" id="answer"></pre>
+      </div>
+    </section>
+
+    <p class="footer-note">Claim boundary: this static MVP demonstrates the source-led workflow with bundled sample evidence. It does not claim live Nimble API usage, current web extraction, or automatically verified truth.</p>
+  </main>
+
+  <script>
+    const sources = [
+      {
+        id: 'S1',
+        title: 'DeveloperWeek NY 2026 Hackathon page',
+        url: 'https://dwny-2026-hackathon.devpost.com/',
+        note: 'Shows dates, online/in-person structure, sponsor tracks, and judging criteria.'
+      },
+      {
+        id: 'S2',
+        title: 'Nimble sponsor challenge',
+        url: 'https://dwny-2026-hackathon.devpost.com/',
+        note: 'Asks builders to use live web search, browsing, extraction, crawl, map, agents, MCP server, or APIs.'
+      },
+      {
+        id: 'S3',
+        title: 'Submission risk pattern',
+        url: 'internal workflow notes',
+        note: 'Hackathon submissions fail when links, proof, screenshots, or claims are stale.'
+      },
+      {
+        id: 'S4',
+        title: 'Operator need',
+        url: 'internal product notes',
+        note: 'Teams need a repeatable way to know what is sourced, what is guessed, and what needs human approval.'
+      }
+    ];
+
+    const baseClaims = [
+      ['DeveloperWeek NY runs May 25 to June 10, 2026.', 'S1', 'high', 'approve'],
+      ['Nimble rewards agentic apps that search, browse, extract, or analyze live web data.', 'S2', 'high', 'approve'],
+      ['Judging includes progress, concept, and feasibility.', 'S1', 'high', 'approve'],
+      ['A deadline-monitoring evidence agent fits the sponsor challenge.', 'S1 + S2', 'medium', 'approve with wording'],
+      ['The product can become a startup workflow for operators.', 'S3 + S4', 'medium', 'approve with caveat'],
+      ['Every source should be refreshed before final submission.', 'S3', 'high', 'approve']
+    ];
+
+    const blocked = [
+      'Do not claim this static build has already called Nimble APIs.',
+      'Do not claim bundled sample evidence is current live web data.',
+      'Do not claim the answer is true without a source refresh near submission time.'
+    ];
+
+    const followUps = [
+      'Run a real Nimble Search query for current hackathon page changes.',
+      'Extract sponsor requirements into a dated evidence snapshot.',
+      'Crawl the project README and verify public links still work.',
+      'Generate a final approval packet with source timestamps.'
+    ];
+
+    const $ = (id) => document.getElementById(id);
+
+    function escapeHtml(value) {
+      return value.replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      }[char]));
+    }
+
+    function buildPacket() {
+      const question = $('question').value.trim() || 'No question provided.';
+      const mode = $('mode').value;
+      const claims = baseClaims.slice();
+      if (question.toLowerCase().includes('deadline')) {
+        claims.push(['Deadline tracking is a strong first use case because it has concrete source changes and clear failure cost.', 'S1 + S3', 'medium', 'approve with caveat']);
+      }
+      const readiness = Math.round((claims.filter((claim) => claim[3].startsWith('approve')).length / (claims.length + blocked.length)) * 100);
+      return { question, mode, sources, claims, blocked, followUps, readiness };
+    }
+
+    function render() {
+      const packet = buildPacket();
+      $('sourceMetric').textContent = packet.sources.length;
+      $('claimMetric').textContent = packet.claims.length;
+      $('blockedMetric').textContent = packet.blocked.length;
+      $('approvalMetric').textContent = `${packet.readiness}%`;
+
+      $('sourceGrid').innerHTML = packet.sources.map((source) => `
+        <div class="card">
+          <h3>${escapeHtml(source.id)} · ${escapeHtml(source.title)}</h3>
+          <p class="source-url">${escapeHtml(source.url)}</p>
+          <p>${escapeHtml(source.note)}</p>
+        </div>
+      `).join('');
+
+      $('claimTable').querySelector('tbody').innerHTML = packet.claims.map((claim) => `
+        <tr>
+          <td>${escapeHtml(claim[0])}</td>
+          <td>${escapeHtml(claim[1])}</td>
+          <td>${escapeHtml(claim[2])}</td>
+          <td>${escapeHtml(claim[3])}</td>
+        </tr>
+      `).join('');
+
+      $('blockedList').innerHTML = packet.blocked.map((item) => `<div class="card"><p>${escapeHtml(item)}</p></div>`).join('');
+      $('followUpList').innerHTML = packet.followUps.map((item) => `<div class="card"><p>${escapeHtml(item)}</p></div>`).join('');
+
+      $('answer').textContent = `# Evidence Answer
+
+Question: ${packet.question}
+Mode: ${packet.mode}
+
+Short answer:
+Yes, a live web evidence agent is a practical fit when the user needs current pages, sponsor requirements, deadlines, and submission risks summarized with citations. The strongest version is not a generic research chatbot. It is a claim ledger: every answer line is tied to a source, confidence level, blocked claim, and human approval state.
+
+Approved claims:
+${packet.claims.map((claim) => `- ${claim[0]} [${claim[1]} / ${claim[2]}]`).join('\n')}
+
+Blocked claims:
+${packet.blocked.map((item) => `- ${item}`).join('\n')}
+
+Next search plan:
+${packet.followUps.map((item) => `- ${item}`).join('\n')}`;
+    }
+
+    $('buildBtn').addEventListener('click', render);
+    $('copyBtn').addEventListener('click', async () => {
+      await navigator.clipboard.writeText($('answer').textContent);
+      $('copyBtn').textContent = 'Copied';
+      setTimeout(() => { $('copyBtn').textContent = 'Copy Approval Answer'; }, 1200);
+    });
+    render();
+  </script>
+</body>
+</html>
+
