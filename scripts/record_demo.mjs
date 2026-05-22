@@ -51,24 +51,26 @@ const page = await context.newPage();
 await page.goto(`http://127.0.0.1:${port}/`);
 await page.waitForSelector('#buildBtn');
 await page.waitForLoadState('networkidle');
-await page.waitForTimeout(13000);
+await page.waitForTimeout(9000);
 
 await page.fill(
   '#question',
   'Can a live web agent keep a hackathon team aligned on current deadlines, sponsor requirements, source evidence, and claims that should not be repeated?'
 );
 await page.selectOption('#mode', 'live public-page snapshot');
-await page.waitForTimeout(12000);
+await page.waitForTimeout(7000);
 await page.click('#buildBtn');
-await page.waitForTimeout(17000);
+await page.waitForTimeout(12000);
 await page.getByRole('heading', { name: 'Source Cards' }).scrollIntoViewIfNeeded();
-await page.waitForTimeout(17000);
+await page.waitForTimeout(15000);
 await page.getByRole('heading', { name: 'Claim Ledger' }).scrollIntoViewIfNeeded();
-await page.waitForTimeout(19000);
+await page.waitForTimeout(16000);
 await page.getByRole('heading', { name: 'Blocked Claims' }).scrollIntoViewIfNeeded();
+await page.waitForTimeout(15000);
+await page.getByRole('heading', { name: 'Voice Handoff Gate' }).scrollIntoViewIfNeeded();
 await page.waitForTimeout(18000);
 await page.getByRole('heading', { name: 'Approval-Ready Answer' }).scrollIntoViewIfNeeded();
-await page.waitForTimeout(26000);
+await page.waitForTimeout(22000);
 
 const video = page.video();
 await context.close();
@@ -82,4 +84,3 @@ await fs.rm(videoDir, { recursive: true, force: true });
 
 console.log('live_web_evidence_agent_demo_video_ok');
 console.log(`video=${path.relative(root, finalVideo)}`);
-

@@ -478,11 +478,15 @@ ${packet.followUps.map((item) => `- ${item}`).join('\n')}`;
         setTimeout(() => { $('speakBtn').textContent = 'Preview Voice Handoff'; }, 1400);
         return;
       }
+      $('speakBtn').textContent = 'Voice preview started';
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(message);
       utterance.rate = 0.92;
       utterance.pitch = 1;
+      utterance.onend = () => { $('speakBtn').textContent = 'Preview Voice Handoff'; };
+      utterance.onerror = () => { $('speakBtn').textContent = 'Preview Voice Handoff'; };
       window.speechSynthesis.speak(utterance);
+      setTimeout(() => { $('speakBtn').textContent = 'Preview Voice Handoff'; }, 4000);
     });
     loadSnapshot().then((snapshot) => {
       evidenceSnapshot = snapshot;

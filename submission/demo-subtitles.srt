@@ -1,32 +1,39 @@
 1
-00:00:00,000 --> 00:00:15,000
+00:00:00,000 --> 00:00:13,000
 Live Web Evidence Agent is built for a common failure in AI research: confident answers with weak traceability.
 
 2
-00:00:15,000 --> 00:00:32,000
-For DeveloperWeek New York, this targets the Nimble live web challenge with source cards, a claim ledger, blocked claims, and an approval-ready answer.
+00:00:13,000 --> 00:00:27,000
+Teams need to know which claims came from which source, what is current, and which sentences should not be repeated yet.
 
 3
-00:00:32,000 --> 00:00:49,000
-The app loads a dated public-page snapshot generated from DeveloperWeek and Devpost source pages.
+00:00:27,000 --> 00:00:42,000
+For DeveloperWeek New York, this targets the Nimble live web challenge with source cards, a claim ledger, blocked claims, a voice handoff gate, and an approval-ready answer.
 
 4
-00:00:49,000 --> 00:01:05,000
-The source cards show where the evidence came from, so the answer cannot float away from its sources.
+00:00:42,000 --> 00:00:56,000
+The app loads a dated public-page snapshot. A sponsor-backed version can feed the same table with live search, extract, crawl, or agent results.
 
 5
-00:01:05,000 --> 00:01:23,000
-The claim ledger gives each claim a source, confidence level, and decision.
+00:00:56,000 --> 00:01:10,000
+The source cards show where the evidence came from, so the answer cannot float away from its sources.
 
 6
-00:01:23,000 --> 00:01:40,000
-Blocked claims tell the user what not to repeat until live sources and sponsor integrations are verified.
+00:01:10,000 --> 00:01:24,000
+The claim ledger gives each claim a source, confidence level, and decision.
 
 7
-00:01:40,000 --> 00:01:57,000
-The approval-ready answer turns the ledger into a usable response without hiding uncertainty.
+00:01:24,000 --> 00:01:38,000
+Blocked claims tell the user what not to repeat until sources and sponsor integrations are verified.
 
 8
-00:01:57,000 --> 00:02:15,000
-The product is live web speed, source discipline, and human approval before claims leave the room.
+00:01:38,000 --> 00:01:54,000
+The voice handoff gate prepares a resume packet and can call a human back only when judgment is required.
 
+9
+00:01:54,000 --> 00:02:10,000
+The approval-ready answer turns the ledger into a usable response without hiding uncertainty.
+
+10
+00:02:10,000 --> 00:02:22,000
+The product is live web speed, source discipline, and an AI agent that keeps working until human judgment is truly needed.
