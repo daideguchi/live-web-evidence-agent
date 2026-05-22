@@ -33,6 +33,13 @@ How it solves the problem: the app turns a research question into a review path:
 
 What is proven now: the public app loads a dated public-page snapshot, renders source cards and a claim ledger, blocks unsafe claims, creates a human handoff packet, and verifies screenshots, demo video, claim boundaries, and no-secrets status.
 
+## 30-Second Review Path
+
+1. Read the one-sentence pitch to understand the source-to-claim workflow.
+2. Open the live app and build the evidence packet.
+3. Check source cards, confidence labels, and blocked claims before reading the final answer.
+4. Confirm the boundary: public static mode proves the workflow, not real Nimble API usage or automatic truth verification.
+
 ## Problem
 
 People ask AI to research the live web, then get a confident answer with weak traceability.
