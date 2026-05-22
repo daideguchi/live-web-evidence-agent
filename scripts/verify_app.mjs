@@ -45,10 +45,14 @@ const rows = await page.locator('#claimTable tbody tr').count();
 const blocked = await page.locator('#blockedList .card').count();
 const handoffItems = await page.locator('#handoffList li').count();
 const answer = await page.locator('#answer').textContent();
+const body = await page.locator('body').textContent();
 
 if (rows < 6) throw new Error(`expected at least 6 claim rows, got ${rows}`);
 if (blocked < 3) throw new Error(`expected at least 3 blocked claims, got ${blocked}`);
 if (handoffItems < 5) throw new Error(`expected handoff resume packet, got ${handoffItems}`);
+if (!body.includes('Review Path') || !body.includes('Snapshot status:')) {
+  throw new Error('missing review path or snapshot status');
+}
 if (!answer.includes('Approved claims') || !answer.includes('Blocked claims')) {
   throw new Error('missing answer sections');
 }
@@ -64,4 +68,5 @@ console.log('live_web_evidence_agent_app_verify_ok');
 console.log(`claim_rows=${rows}`);
 console.log(`blocked_claims=${blocked}`);
 console.log(`handoff_items=${handoffItems}`);
+console.log('review_path_ok');
 console.log('screenshot=media/live-web-evidence-agent-full.png');

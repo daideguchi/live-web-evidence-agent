@@ -79,6 +79,35 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
     }
+    .review-path {
+      grid-column: 1 / -1;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .flow-step {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #f9fcfd;
+    }
+    .flow-step strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .flow-step span {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+    .snapshot-note {
+      color: var(--muted);
+      margin: 0;
+      font-size: 13px;
+    }
     .metric, .panel, .card {
       border: 1px solid var(--line);
       background: var(--surface);
@@ -146,7 +175,7 @@
     }
     @media (max-width: 960px) {
       header { flex-direction: column; }
-      main, .hero, .grid-2, .grid-3, .handoff-grid, .handoff-actions { grid-template-columns: 1fr; }
+      main, .hero, .flow, .grid-2, .grid-3, .handoff-grid, .handoff-actions { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -165,6 +194,20 @@
       <div class="metric"><strong id="claimMetric">6</strong><span>extracted claims</span></div>
       <div class="metric"><strong id="blockedMetric">3</strong><span>blocked claims</span></div>
       <div class="metric"><strong id="handoffMetric">1</strong><span>human handoff gate</span></div>
+    </section>
+
+    <section class="panel review-path" aria-label="judge review path">
+      <div class="panel-title">
+        <h2>Review Path</h2>
+        <span class="pill good">source first</span>
+      </div>
+      <div class="flow">
+        <div class="flow-step"><strong>1. Pull sources</strong><span>Start from dated pages and source cards, not a free-floating answer.</span></div>
+        <div class="flow-step"><strong>2. Extract claims</strong><span>Turn page evidence into a ledger with confidence and source IDs.</span></div>
+        <div class="flow-step"><strong>3. Block unsafe lines</strong><span>Separate useful claims from claims that should not be repeated yet.</span></div>
+        <div class="flow-step"><strong>4. Call the human</strong><span>Export an approval answer and handoff packet only after the risky lines are visible.</span></div>
+      </div>
+      <p class="snapshot-note" id="snapshotStatus">Snapshot status: loading public evidence snapshot.</p>
     </section>
 
     <aside class="panel">
@@ -405,6 +448,7 @@
 
       $('blockedList').innerHTML = packet.blocked.map((item) => `<div class="card"><p>${escapeHtml(item)}</p></div>`).join('');
       $('followUpList').innerHTML = packet.followUps.map((item) => `<div class="card"><p>${escapeHtml(item)}</p></div>`).join('');
+      $('snapshotStatus').textContent = snapshotStatus(evidenceSnapshot);
       const prompt = handoffPrompt(packet);
       $('handoffPrompt').textContent = prompt;
       $('handoffList').innerHTML = handoffSummary(packet).map((item) => `<li>${escapeHtml(item)}</li>`).join('');
@@ -435,6 +479,20 @@ ${packet.followUps.map((item) => `- ${item}`).join('\n')}`;
         return 'No human voice handoff is needed. All claims are ready for approval review.';
       }
       return `I found ${packet.blocked.length} claims that should not be repeated yet. Please review the blocked claims, refresh the sources if needed, and approve the final answer before it is shared.`;
+    }
+
+    function snapshotStatus(snapshot) {
+      if (!snapshot || !Array.isArray(snapshot.sources)) {
+        return 'Snapshot status: using bundled sample evidence. Refresh sources before final submission.';
+      }
+      const fetched = snapshot.sources
+        .map((source) => source.fetched_at)
+        .filter(Boolean)
+        .sort()
+        .at(-1);
+      const count = snapshot.sources.length;
+      const claimCount = Array.isArray(snapshot.claims) ? snapshot.claims.length : 0;
+      return `Snapshot status: ${count} public sources and ${claimCount} live-page claims loaded. Latest fetch: ${fetched || 'unknown'}.`;
     }
 
     function handoffSummary(packet) {
