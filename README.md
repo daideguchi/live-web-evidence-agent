@@ -33,11 +33,26 @@ Live Web Evidence Agent turns a research question into:
 
 The app is designed so a live web provider such as Nimble can feed the evidence table, while the user keeps control of which claims are approved.
 
+## Demo Video Asset
+
+Current narrated review asset:
+
+```text
+media/live-web-evidence-agent-demo-narrated.mp4
+```
+
+It includes:
+
+- 1440x1080 screen recording
+- English narration
+- embedded English subtitle track
+- generated thumbnail at `media/live-web-evidence-agent-demo-thumb.png`
+
 ## What It Does Not Claim
 
 - It does not claim real Nimble API usage yet.
 - It does not claim Nimble-powered live extraction in the public static build.
-- It does not claim that bundled sample evidence is current.
+- It does not claim automatically verified truth.
 - It does not replace human review.
 
 ## Run

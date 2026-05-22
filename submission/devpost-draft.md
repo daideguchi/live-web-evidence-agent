@@ -41,3 +41,4 @@ This static MVP does not claim live Nimble API usage yet. It demonstrates the wo
 - Add a backend proxy for safe API calls.
 - Store dated source snapshots.
 - Export evidence packets for submission and launch teams.
+- Measure time saved for research and submission-review workflows.

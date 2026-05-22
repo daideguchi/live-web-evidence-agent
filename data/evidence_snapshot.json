@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-22T00:58:48.817Z",
+  "generated_at": "2026-05-22T01:56:50.576Z",
   "generator": "scripts/refresh_sources.mjs",
   "claim_boundary": "This snapshot proves live page fetches for public source evidence. It does not prove Nimble API usage.",
   "sources": [
@@ -7,7 +7,7 @@
       "id": "S1",
       "title": "DeveloperWeek NY 2026 Hackathon page",
       "url": "https://dwny-2026-hackathon.devpost.com/",
-      "fetched_at": "2026-05-22T00:58:47.497Z",
+      "fetched_at": "2026-05-22T01:56:49.351Z",
       "snippets": [
         {
           "marker": "May 25",
@@ -43,7 +43,7 @@
       "id": "S2",
       "title": "DeveloperWeek New York Hackathon page",
       "url": "https://www.developerweek.com/newyork/hackathon/",
-      "fetched_at": "2026-05-22T00:58:48.817Z",
+      "fetched_at": "2026-05-22T01:56:50.576Z",
       "snippets": [
         {
           "marker": "May 25",

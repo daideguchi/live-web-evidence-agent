@@ -1,0 +1,32 @@
+1
+00:00:00,000 --> 00:00:15,000
+Live Web Evidence Agent is built for a common failure in AI research: confident answers with weak traceability.
+
+2
+00:00:15,000 --> 00:00:32,000
+For DeveloperWeek New York, this targets the Nimble live web challenge with source cards, a claim ledger, blocked claims, and an approval-ready answer.
+
+3
+00:00:32,000 --> 00:00:49,000
+The app loads a dated public-page snapshot generated from DeveloperWeek and Devpost source pages.
+
+4
+00:00:49,000 --> 00:01:05,000
+The source cards show where the evidence came from, so the answer cannot float away from its sources.
+
+5
+00:01:05,000 --> 00:01:23,000
+The claim ledger gives each claim a source, confidence level, and decision.
+
+6
+00:01:23,000 --> 00:01:40,000
+Blocked claims tell the user what not to repeat until live sources and sponsor integrations are verified.
+
+7
+00:01:40,000 --> 00:01:57,000
+The approval-ready answer turns the ledger into a usable response without hiding uncertainty.
+
+8
+00:01:57,000 --> 00:02:15,000
+The product is live web speed, source discipline, and human approval before claims leave the room.
+
