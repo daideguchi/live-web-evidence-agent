@@ -18,6 +18,12 @@ It is built around a simple rule: AI can help search and summarize, but every us
 
 ## Judge Quick Read
 
+One-sentence pitch:
+
+```text
+For teams using AI to research the live web, Live Web Evidence Agent turns current pages into a claim ledger so confident answers become reviewable evidence.
+```
+
 Who it helps: teams that use AI to research live web pages but still need a human-safe approval trail.
 
 The problem: AI can sound confident even when a claim is stale, weakly sourced, or unsafe to repeat.

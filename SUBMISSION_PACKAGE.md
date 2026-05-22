@@ -8,6 +8,16 @@ Live Web Evidence Agent
 
 Source-led answers from live web evidence.
 
+## One-Sentence Pitch
+
+For teams using AI to research the live web, Live Web Evidence Agent turns current pages into a claim ledger so confident answers become reviewable evidence.
+
+## Who / Problem / How
+
+- Who: operators, founders, investors, and product teams that use AI to monitor current public pages.
+- Problem: AI can answer quickly while hiding which claims are sourced, stale, weak, or unsafe to repeat.
+- How: the app creates source cards, confidence-labeled claims, blocked claims, a human handoff packet, and an approval-ready answer.
+
 ## Public Links
 
 - Live app: https://daideguchi.github.io/live-web-evidence-agent/

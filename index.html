@@ -82,6 +82,16 @@
     .review-path {
       grid-column: 1 / -1;
     }
+    .judge-hook {
+      grid-column: 1 / -1;
+    }
+    .pitch-line {
+      margin: 0;
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 800;
+      max-width: 1120px;
+    }
     .flow {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -194,6 +204,14 @@
       <div class="metric"><strong id="claimMetric">6</strong><span>extracted claims</span></div>
       <div class="metric"><strong id="blockedMetric">3</strong><span>blocked claims</span></div>
       <div class="metric"><strong id="handoffMetric">1</strong><span>human handoff gate</span></div>
+    </section>
+
+    <section class="panel judge-hook" aria-label="one sentence pitch">
+      <div class="panel-title">
+        <h2>One-Sentence Pitch</h2>
+        <span class="pill good">judge hook</span>
+      </div>
+      <p class="pitch-line">For teams using AI to research the live web, Live Web Evidence Agent turns current pages into a claim ledger so confident answers become reviewable evidence.</p>
     </section>
 
     <section class="panel review-path" aria-label="judge review path">

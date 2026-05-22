@@ -50,6 +50,9 @@ const body = await page.locator('body').textContent();
 if (rows < 6) throw new Error(`expected at least 6 claim rows, got ${rows}`);
 if (blocked < 3) throw new Error(`expected at least 3 blocked claims, got ${blocked}`);
 if (handoffItems < 5) throw new Error(`expected handoff resume packet, got ${handoffItems}`);
+if (!body.includes('One-Sentence Pitch') || !body.includes('reviewable evidence')) {
+  throw new Error('missing one-sentence judge hook');
+}
 if (!body.includes('Review Path') || !body.includes('Snapshot status:')) {
   throw new Error('missing review path or snapshot status');
 }
