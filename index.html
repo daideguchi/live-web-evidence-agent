@@ -111,6 +111,17 @@
     .judge-hook {
       grid-column: 1 / -1;
     }
+    .metric-caption {
+      grid-column: 1 / -1;
+      margin: 0 0 6px;
+      padding: 10px 14px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
     .pitch-line {
       margin: 0;
       color: var(--ink);
@@ -223,6 +234,7 @@
       <p class="tagline">An agentic research workspace that turns live-web findings into source cards, extracted claims, blocked claims, and an approval-ready answer.</p>
     </div>
     <div class="header-actions">
+      <span class="badge">Submission window locked</span>
       <span class="badge">DeveloperWeek NY · Nimble fit</span>
       <div class="lang-toggle" aria-label="Language">
         <button type="button" class="active" data-lang-button="en">EN</button>
@@ -232,6 +244,7 @@
   </header>
 
   <main>
+    <p class="metric-caption">The numbers below come from the bundled public-page snapshot, not a live API call. They show the source-led workflow: pull sources, extract claims, block unsafe lines, hand off to a human.</p>
     <section class="hero" aria-label="evidence metrics">
       <div class="metric"><strong id="sourceMetric">4</strong><span>source cards</span></div>
       <div class="metric"><strong id="claimMetric">6</strong><span>extracted claims</span></div>
@@ -397,7 +410,9 @@
       ja: {
         'Live Web Evidence Agent': 'ライブWeb証拠エージェント',
         'An agentic research workspace that turns live-web findings into source cards, extracted claims, blocked claims, and an approval-ready answer.': 'ライブWebの調査結果を、情報源カード、抽出した主張、ブロックすべき主張、承認できる回答に変える調査ワークスペースです。',
+        'Submission window locked': '提出窓は開放待ち',
         'DeveloperWeek NY · Nimble fit': 'DeveloperWeek NY · Nimble向け',
+        'The numbers below come from the bundled public-page snapshot, not a live API call. They show the source-led workflow: pull sources, extract claims, block unsafe lines, hand off to a human.': '下の数字は、同梱の公開ページスナップショットからの値です。ライブAPI呼び出しの結果ではありません。情報源主導のワークフロー（情報源を集める、主張を抽出する、危ない文を止める、人間へ引き継ぐ）を示します。',
         'source cards': '情報源カード',
         'extracted claims': '抽出した主張',
         'blocked claims': 'ブロック主張',
