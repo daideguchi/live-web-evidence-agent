@@ -2,6 +2,10 @@
 
 [English README](README.md)
 
+## 提出状況
+
+DeveloperWeek New York 2026 Hackathon の Nimble スポンサー賞向けに、2026-05-27 に Devpost へ提出済みです。
+
 ## 一言でいうと
 
 AIでライブWeb調査をするチームのために、現在のページを主張台帳に変え、自信満々の回答をレビュー可能な証拠に変えるツールです。

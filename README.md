@@ -15,7 +15,7 @@ It is built around a simple rule: AI can help search and summarize, but every us
 - YouTube demo: https://youtu.be/td_iwN247TE
 - Release assets: https://github.com/daideguchi/live-web-evidence-agent/releases/tag/v0.1-submission
 - Current data mode: live public-page snapshot plus browser-side workflow
-- Final submission: not submitted
+- Final submission: submitted on DeveloperWeek New York 2026 Devpost for the Nimble sponsor prize on 2026-05-27
 
 ## Judge Quick Read
 
